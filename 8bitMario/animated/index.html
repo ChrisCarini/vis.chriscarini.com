@@ -1,0 +1,1246 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>8-bit Mario </title>
+  <script>
+    function load() {
+      const numTables = document.getElementsByTagName('table').length;
+
+      let windowInterval = null;
+      let current = 1;
+
+      function next() {
+        current--;
+        if (current < 1) {
+          current = numTables;
+        } // wrap around back to max
+        showTable(current);
+      }
+
+      function previous() {
+        current++;
+        if (current === numTables) {
+          current = 1;
+        } // wrap around back to 1
+        showTable(current);
+      }
+
+      function pauseResume() {
+        if (!windowInterval) {
+          windowInterval = window.setInterval(next, 250);
+          return
+        }
+        clearInterval(windowInterval)
+        windowInterval = null
+      }
+
+      // Move forward / backward on left/right keypress
+      window.onkeydown = function (e) {
+        switch (e.code) {
+          case 'ArrowRight':
+            next();
+            break;
+          case 'ArrowLeft':
+            previous();
+            break;
+          case 'Space':
+            pauseResume();
+            break;
+        }
+      };
+
+      // Automatically advance
+      pauseResume()
+
+      // Hide all tables except for index passed in
+      function showTable(div) {
+        for (let i = 1; i <= numTables; i++) {
+          document.getElementById('frame' + i).hidden = div !== i;
+        }
+      }
+    }
+  </script>
+  <style>
+      /* CENTER TABLES */
+      .frame_table {
+          margin-left: auto;
+          margin-right: auto;
+      }
+
+      table {
+          border-collapse: collapse;
+      }
+
+      td {
+          padding: 15px;
+      }
+
+      /* WHITE */
+      .clear {
+          background-color: #ffffff;
+      }
+
+      /* RED */
+      .hat {
+          background-color: #ff0000;
+      }
+
+      .shirt {
+          background-color: #ff0000;
+      }
+
+      /* BROWN */
+      .hair {
+          background-color: #974807;
+      }
+
+      .boot {
+          background-color: #974807;
+      }
+
+      /* TAN */
+      .skin {
+          background-color: #fac090;
+      }
+
+      /* BLACK */
+      .eyes {
+          background-color: #000000;
+      }
+
+      .smile {
+          background-color: #000000;
+      }
+
+      /* BLUE */
+      .jumper {
+          background-color: #0070c0;
+      }
+
+      /* YELLOW */
+      .button {
+          background-color: #ffff00;
+      }
+  </style>
+</head>
+<body onload="load()" style="text-align: center; alignment: center">
+<div>
+  <p>
+    <a href="../static">Inspired by the static version found here. Heavily modified.</a>
+  </p>
+  <p>
+    This animation is pure HTML/CSS/JavaScript.
+  </p>
+
+  <table hidden id="frame1" class="frame_table">
+    <!-- Head -->
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="hat"></td>
+      <td class="hat"></td>
+      <td class="hat"></td>
+      <td class="hat"></td>
+      <td class="hat"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="hat"></td>
+      <td class="hat"></td>
+      <td class="hat"></td>
+      <td class="hat"></td>
+      <td class="hat"></td>
+      <td class="hat"></td>
+      <td class="hat"></td>
+      <td class="hat"></td>
+      <td class="hat"></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="eyes"></td>
+      <td class="skin"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="hair"></td>
+      <td class="skin"></td>
+      <td class="hair"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="eyes"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="hair"></td>
+      <td class="skin"></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="smile"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="smile"></td>
+      <td class="smile"></td>
+      <td class="smile"></td>
+      <td class="smile"></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <!-- Body -->
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="shirt">
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+    </tr>
+    <tr class="clear">
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="jumper"></td>
+      <td class="button"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+    </tr>
+    <tr class="clear">
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td></td>
+      <td></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td></td>
+      <td></td>
+      <td class="boot"></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+
+  <!-- Frame 2 and 4 are identical. -->
+  <table hidden id="frame2" class="frame_table">
+    <!-- Head -->
+    <tr class="hat">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="hat">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td></td>
+      <td class="eyes"></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td class="hair"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="eyes"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="smile"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="smile"></td>
+      <td class="smile"></td>
+      <td class="smile"></td>
+      <td class="smile"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <!-- Body -->
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="jumper"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="button"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="button"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="jumper"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="jumper"></td>
+      <td class="shirt"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+
+  <table hidden id="frame3" class="frame_table">
+    <!-- Head -->
+    <tr class="hat">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="hat">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td></td>
+      <td class="eyes"></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td class="hair"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="eyes"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="smile"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="smile"></td>
+      <td class="smile"></td>
+      <td class="smile"></td>
+      <td class="smile"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <!-- Body -->
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="jumper"></td>
+      <td class="shirt"></td>
+      <td></td>
+      <td class="skin"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="skin"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="jumper"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td class="boot"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td class="boot"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+
+  <!-- Frame 2 and 4 are identical. -->
+  <table hidden id="frame4" class="frame_table">
+    <!-- Head -->
+    <tr class="hat">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="hat">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td></td>
+      <td class="eyes"></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td class="hair"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="eyes"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="smile"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="hair"></td>
+      <td class="hair"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="smile"></td>
+      <td class="smile"></td>
+      <td class="smile"></td>
+      <td class="smile"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <tr class="skin">
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+      <td class="clear"></td>
+    </tr>
+    <!-- Body -->
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="jumper"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="button"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="button"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="jumper"></td>
+      <td class="shirt"></td>
+      <td class="shirt"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="jumper"></td>
+      <td class="shirt"></td>
+      <td class="skin"></td>
+      <td class="skin"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="jumper"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="clear">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td class="boot"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
