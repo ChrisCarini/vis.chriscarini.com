@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>bART - Bar Art</title>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="nanobar.js"></script>
+<script src="nanobar-vert.js"></script>
+<script type="text/javascript">
+
+var bpm = 120;
+var mult = [4,2,1,.5,.25]; // [0] 1/1 , [1] 1/2 , [2] 1/4 , [3] 1/8 , [4] 1/16
+var msec = 60000 / ( bpm / mult[1]);
+
+var opts = {
+    incVal:             3,
+    barHeight:          20,
+    updateTimeout:      1000,//msec,
+    colorChangePercent: 50
+}
+var nbHA = [];
+var nbVA = [];
+var hNum = Math.floor($(window).height()/opts.barHeight)-1;
+var wNum = Math.floor($(window).width()/opts.barHeight)-1;
+
+$(document).ready(function(){
+    $("#cont").css('height',$(window).height()/2);
+    $("#cont").css('margin-top',($(window).height()/2)-((hNum*opts.barHeight)/2));
+    
+    $("#top,#bottom").css('width',($(window).width()/2));
+    $("#top,#bottom").css('margin-left',($(window).width()/2)-((wNum*opts.barHeight)/2));
+    
+    console.log("hNum: "+hNum+"\nhNum / 2:"+hNum/2);
+    console.log("wNum: "+wNum+"\nwNum / 2:"+wNum/2);
+    
+    $.each(Array(hNum*2),function(x){
+        if(x<hNum){
+            $('#left').append("<div id=H"+x+"></div>");
+            nbHA.push(new Nanobar({bg:randColor(),target:document.getElementById("H"+x),height:opts.barHeight,id:'nbHDivL'+x}));
+        }
+        else{
+            $('#right').append("<div id=H"+x+"></div>");
+            nbHA.push(new Nanobar({bg:randColor(),target:document.getElementById("H"+x),height:opts.barHeight,align:'right',id:'nbHDivR'+x}));
+        }
+    });
+    $.each(Array(wNum*2),function(x){
+        if(x<wNum){
+            $('#top').append("<div id=V"+x+"></div>");
+            nbVA.push(new NanobarV({bg:randColor(),target:document.getElementById("V"+x),width:opts.barHeight,offset:((x*opts.barHeight)),align:'top',id:'nbVDivL'+x}));
+        }
+        else{
+            $('#bottom').append("<div id=V"+x+"></div>");
+            nbVA.push(new NanobarV({bg:randColor(),target:document.getElementById("V"+x),width:opts.barHeight,offset:((x*opts.barHeight)-(wNum*opts.barHeight)),align:'bottom',id:'nbVDivR'+x}));
+        }
+    });
+
+    updateBars();
+});
+
+function randColor() {
+    var l = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += l[Math.round(Math.random() * 15)];
+    }
+    return color;
+}
+function randNum(n) // return a rand num between 1 and n
+{
+    return 0.5 + Math.floor(Math.random() * n);
+}
+
+function updateBars()
+{
+    var start = Date.now();
+    $.each(Array(hNum*2),function(x){
+        if(randNum(100)>opts.colorChangePercent){nbHA[x].setBg(randColor());}
+        if(randNum(100)>opts.colorChangePercent){nbHA[x].setZIndex(randNum(4));}
+        nbHA[x].go(randNum(99));
+    });
+    $.each(Array(wNum*2),function(x){
+        if(randNum(100)>opts.colorChangePercent){nbVA[x].setBg(randColor());}
+        if(randNum(100)>opts.colorChangePercent){nbVA[x].setZIndex(randNum(4));}
+        nbVA[x].go(randNum(90));
+    });
+    setTimeout(function(){updateBars()},opts.updateTimeout-(start-Date.now()));
+}
+</script>
+</head>
+ 
+<body>
+<div id="cont" style="position:relative;top:50%;">
+    <div id="left" style="position:absolute;top:0px;left:0px;width:100%;"></div>
+    <div id="right" style="position:absolute;top:0px;right:0px;width:100%;"></div>
+</div>
+<div id="cont2">
+    <div id="top" style="position:absolute;top:7.5px;left:0px;width:100%;"></div>
+    <div id="bottom" style="position:absolute;bottom:7.5px;left:0px;width:100%;"></div>
+</div>
+</body>
+</html>

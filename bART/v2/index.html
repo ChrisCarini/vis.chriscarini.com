@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>bART - v2</title>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+var bpm = 120;
+var mult = [4,2,1,.5,.25]; // [0] 1/1 , [1] 1/2 , [2] 1/4 , [3] 1/8 , [4] 1/16
+var msec = 60000 / ( bpm / mult[1]);
+
+var opts = {
+    barHeight:          20,
+    updateTimeout:      1000,//msec,
+    colorChangePercent: 50
+}
+var bars = [];
+var randRotation = 0;
+var can,ctx;
+
+$(document).ready(function(){
+    // Set global canvas vars
+    can = document.getElementById("can");
+    ctx = can.getContext("2d");
+    
+    // Set Canvas Size
+    can.height = $(window).height() - 21;
+    can.width  = $(window).width() - 15;
+    var hNum = Math.floor(can.height/(opts.barHeight+1));
+    var wNum = Math.floor(can.width/(opts.barHeight+1));
+    
+    $.each(Array(wNum),function(num){ // Make Top & Bottom Bars
+        bars.push({pos: 't',
+                   color: randColor(), // Top Bars
+                   x: (num*(opts.barHeight+1)),
+                   y: 0,
+                   w: opts.barHeight,
+                   h: randNum(can.height)
+                  });
+        bars.push({pos: 'b',
+                   color: randColor(), // Bottom Bars
+                   x: (num*(opts.barHeight+1)),
+                   y: can.height,
+                   w: opts.barHeight,
+                   h: -1*randNum(can.height)
+                  });
+    });
+    $.each(Array(hNum),function(num){ // Make Left & Right Bars
+        bars.push({pos: 'l',
+                   color: randColor(), // Left Bars
+                   x: 0,
+                   y: (num*(opts.barHeight+1)),
+                   w: randNum(can.width),
+                   h: opts.barHeight
+                  });
+        bars.push({pos: 'r',
+                   color: randColor(), // Right Bars
+                   x: can.width,
+                   y: (num*(opts.barHeight+1)),
+                   w: -1*randNum(can.width),
+                   h: opts.barHeight
+                  });
+    });
+    
+    updateBars();
+});
+
+function clearCanvas(can) {
+    can.height = can.height;
+}
+function randColor() {
+    var l = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += l[Math.round(Math.random() * 15)];
+    }
+    return color;
+}
+function randNum(n) { // return a rand num between 1 and n
+    return 1 + Math.floor(Math.random() * n);
+}
+function drawBar(ctx,bar) {
+    ctx.rotate( randRotation * (Math.PI/180) );
+    ctx.beginPath();
+    ctx.rect(bar.x, bar.y, bar.w, bar.h);
+    ctx.fillStyle = bar.color;
+    ctx.fill();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = bar.color;
+    ctx.stroke();
+}
+function updateBarProperties(bar) {
+    if(bar.pos == 't'){ // Top Bar
+        return {pos: 't', color: bar.color, x: bar.x, y: bar.y, w: bar.w, h:randNum(can.height)};
+    } else if(bar.pos == 'b') { // Bottom Bar
+        return {pos: 'b', color: bar.color, x: bar.x, y: bar.y, w: bar.w, h:-1*randNum(can.height)};
+    } else if(bar.pos == 'l') { // Left Bar
+        return {pos: 'l', color: bar.color, x: bar.x, y: bar.y, w: randNum(can.width), h: bar.h};
+    } else if(bar.pos == 'r') { // Right Bar
+        return {pos: 'r', color: bar.color, x: bar.x, y: bar.y, w: -1*randNum(can.width), h: bar.h};
+    } else { console.log("WTF..."); }
+}
+function updateBars() {
+    var start = Date.now();
+    
+    clearCanvas(can);
+    /*
+    // Works, but bars are never 'layered' on top of one another...
+    $.each(Array(bars.length),function(x){
+        drawBar(ctx,bars[x]);
+        bars[x] = updateBarProperties(bars[x]);
+    });
+    */
+    var tmpArray = [];
+    while(bars.length>0){
+        var bar = bars.splice(randNum(bars.length)-1, 1)[0];
+        drawBar(ctx,bar);
+        tmpArray.push(updateBarProperties(bar));
+    }
+    bars = tmpArray;
+    
+    if(randRotation==0){ // If were not rotated, draw a black boarder...
+        ctx.beginPath();
+        ctx.rect(0, 0, can.width, can.height);
+        ctx.lineWidth = 20;
+        ctx.strokeStyle = "#000000";
+        ctx.stroke();
+    }
+    
+    setTimeout(function(){updateBars()},opts.updateTimeout-(start-Date.now()));
+}
+
+$(document).click(function(e) {
+    if(randRotation%90 != 0){randRotation=0;}else{randRotation = 45;}//randNum(90);}
+    console.log("Setting rotation to: "+randRotation);
+});
+</script>
+</head>
+ 
+<body>
+    <div id="main">
+        <canvas id="can"></canvas>
+    </div>
+</body>
+</html>

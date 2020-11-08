@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>ci</title>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+var bpm = 120;
+var mult = [4,2,1,.5,.25]; // [0] 1/1 , [1] 1/2 , [2] 1/4 , [3] 1/8 , [4] 1/16
+var msec = 60000 / ( bpm / mult[1]);
+
+var opts = {
+    numCircles:         1000,
+    maxRadius:          100,
+    
+    maxDeltaX:          5,
+    maxDeltaY:          5,
+    maxDeltaR:          10,
+    
+    updateTimeout:      5,//msec,
+    colorChangePercent: 50
+}
+var circles = [];
+
+var can,ctx;
+
+$(document).ready(function(){
+    // Set global canvas vars
+    can = document.getElementById("can");
+    ctx = can.getContext("2d");
+    
+    var windowWidth  = $(window).width();
+    var windowHeight = $(window).height();
+    
+    // Set Canvas Size
+    can.height = $(window).height() - 21;
+    can.width  = $(window).width() - 15;
+    
+    $.each(Array(opts.numCircles),function(x){
+        circles[x] = genNewCircle();
+    });
+
+    updateCircles();
+});
+
+function clearCanvas(can) {
+    can.height = can.height;
+}
+function randColor() {
+    var l = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += l[Math.round(Math.random() * 15)];
+    }
+    return color;
+}
+function randNum(n) { // return a rand num between 1 and n
+    return 0.5 + Math.floor(Math.random() * n);
+}
+function genNewCircle() {
+    return {color: randColor(), x: randNum(can.width), y: randNum(can.height), r: randNum(opts.maxRadius)}
+}
+function drawCircle(ctx,opt) {
+    ctx.beginPath();
+    ctx.arc(opt.x, opt.y, opt.r, 0, 2*Math.PI);
+    ctx.fillStyle = opt.color;
+    ctx.fill();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = opt.color;
+    ctx.stroke();
+    ctx.stroke();
+}
+function updateCircleProperties(cir) {
+    var newX,newY,newR;
+    newX = ( cir.x+(randNum(opts.maxDeltaX)-(opts.maxDeltaX/2)) );
+    newY = ( cir.y+(randNum(opts.maxDeltaY)-(opts.maxDeltaY/2)) );
+    if(opts.changeRadius){
+        newR = Math.abs( cir.r+(randNum(opts.maxDeltaR)-(opts.maxDeltaR/2)) );
+        if(newR > opts.maxRadius){newR=cir.r-opts.maxDeltaR;}
+    } else {
+        newR = cir.r;
+    }
+    if( (newX+newR)<0 || (newY+newR)<0 || (newX-newR)>can.width || (newY-newR)>can.height ) { // Circle is now not visible...may as well make a new one and overwrite the old..
+        return genNewCircle();
+    } else {
+        return {color: cir.color, x: newX, y: newY, r: newR};
+    }
+}
+function updateCircles() {
+    var start = Date.now();
+    
+    clearCanvas(can);
+    $.each(Array(opts.numCircles),function(x){
+        drawCircle(ctx,circles[x]);
+        circles[x] = updateCircleProperties(circles[x]);
+    });
+    
+    setTimeout(function(){updateCircles()},opts.updateTimeout-(start-Date.now()));
+}
+</script>
+</head>
+ 
+<body>
+    <div id="main">
+        <canvas id="can"></canvas>
+    </div>
+</body>
+</html>
