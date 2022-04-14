@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <title>bART - Bar Art - v3</title>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="nanobar.js"></script>
+    <script src="nanobar-vert.js"></script>
+    <script type="text/javascript">
+        const opts = {
+            incVal: 3,
+            barThickness: 10,
+            updateTimeout: 60 * 1000, //msec,
+            colorChangePercent: 50,
+            transitionTime: '20.0s',
+            colorOption: 'lnkd_anti_acc',
+        }
+        let nbHA = [];
+        let nbVA = [];
+        const hNum = Math.floor($(window).height() / opts.barThickness) - 1;
+        const wNum = Math.floor($(window).width() / opts.barThickness) - 1;
+        const totalBars = (hNum + wNum) * 2;
+        console.log(`hNum: ${hNum}`)
+        console.log(`wNum: ${wNum}`)
+        console.log(`totalBars: ${totalBars}`)
+
+        $(document).ready(function () {
+            console.log("hNum: " + hNum + "\nhNum / 2:" + hNum / 2);
+            console.log("wNum: " + wNum + "\nwNum / 2:" + wNum / 2);
+
+            $.each(Array(hNum * 2), function (x) {
+                if (x < hNum) {
+                    // Left Elements
+                    $('#elements').append(`<div id='H_${x}'></div>`);
+                    nbHA.push(new Nanobar({
+                        id: 'nbH_Div_' + x,
+                        target: document.getElementById(`H_${x}`),
+                        bg: randColor(),
+                        transitionTime: opts.transitionTime,
+                        zIndex: randNum(totalBars),
+                        height: opts.barThickness
+                    }));
+                } else {
+                    // Right Elements
+                    $('#elements').append(`<div id='H_${x}' style='position:absolute;top:${(x - hNum) * opts.barThickness}px;right:0px;width:100%;'></div>`);
+                    nbHA.push(new Nanobar({
+                        id: 'nbH_Div_' + x,
+                        target: document.getElementById(`H_${x}`),
+                        bg: randColor(),
+                        transitionTime: opts.transitionTime,
+                        zIndex: randNum(totalBars),
+                        height: opts.barThickness,
+                        align: 'right'
+                    }));
+                }
+            });
+            $.each(Array(wNum * 2), function (x) {
+                if (x < wNum) {
+                    // Top Elements
+                    $('#elements').append(`<div id='V_${x}'></div>`);
+                    nbVA.push(new NanobarV({
+                        id: 'nbV_Div_' + x,
+                        target: document.getElementById(`V_${x}`),
+                        bg: randColor(),
+                        transitionTime: opts.transitionTime,
+                        zIndex: randNum(totalBars),
+                        width: opts.barThickness,
+                        offset: ((x * opts.barThickness)),
+                        align: 'top'
+                    }));
+                } else {
+                    // Bottom Elements
+                    $('#elements').append(`<div id='V_${x}' style='position:absolute;bottom:-${$(window).height()}px;height:100px;'></div>`);
+                    nbVA.push(new NanobarV({
+                        id: 'nbV_Div_' + x,
+                        target: document.getElementById(`V_${x}`),
+                        bg: randColor(),
+                        transitionTime: opts.transitionTime,
+                        zIndex: randNum(totalBars),
+                        width: opts.barThickness,
+                        offset: ((x - wNum) * opts.barThickness),
+                        align: 'bottom'
+                    }));
+                }
+            });
+
+            updateBars();
+        });
+
+        // function randColor() {
+        //     let l = '0123456789ABCDEF'.split('');
+        //     let color = '#';
+        //     for (let i = 0; i < 6; i++) {
+        //         color += l[Math.round(Math.random() * 15)];
+        //     }
+        //     return color;
+        // }
+        //
+
+        function randColor() {
+            return window[`randColor_${opts.colorOption}`]();
+        }
+
+
+        function randColor_1() {
+            // I like this one, it's light-ish colors.
+            return `hsla(${~~(360 * Math.random())}, 60%, 80%, 1)`;
+        }
+
+        function colorPallet(colors) {
+            const random = Math.floor(Math.random() * colors.length);
+            return colors[random];
+        }
+
+        function randColor_2() {
+            // I like this too; looks like Africa
+            return colorPallet([
+                "#F46036",
+                "#2E294E",
+                "#1B998B",
+                "#E71D36",
+                "#C5D86D",
+            ]);
+        }
+
+        function randColor_3() {
+            // I like this too; looks like bright neon colors
+            return colorPallet([
+                "#57E3FA",
+                "#FA64AA",
+                "#4CFAB1",
+                "#FA8B32",
+                "#3EFA42",
+            ])
+        }
+
+        function randColor_lnkd() {
+            // LinkedIn Brand Colors
+            return colorPallet([
+                "#004182", // Dark Blue
+                "#44712e", // Green
+                "#915907", // Dark Amber
+                "#b24020", // Dark Warm Red
+                "#38434f", // Dark Gray
+
+                "#0a66c2", // LinkedIn Blue
+                "#83941f", // Lime Green
+                "#e7a33e", // Amber
+                "#f5987e", // Warm Red
+                "#56687a", // Cool Gray
+
+                "#dce6f1", // Light Blue
+                "#d7ebce", // Light Sage
+                "#fce2ba", // Light Amber
+                "#fadfd8", // Light Warm Red
+                "#e9e5df", // Light Gray
+            ]);
+        }
+
+        function randColor_lnkd_acc() {
+            // LinkedIn Brand Colors
+            return colorPallet([
+                "#004182", // Dark Blue
+                "#44712e", // Green
+                "#915907", // Dark Amber
+                "#b24020", // Dark Warm Red
+                "#38434f", // Dark Gray
+
+                "#0a66c2", // LinkedIn Blue
+                // "#83941f", // Lime Green
+                // "#e7a33e", // Amber
+                // "#f5987e", // Warm Red
+                "#56687a", // Cool Gray
+
+                // "#dce6f1", // Light Blue
+                // "#d7ebce", // Light Sage
+                // "#fce2ba", // Light Amber
+                // "#fadfd8", // Light Warm Red
+                // "#e9e5df", // Light Gray
+            ]);
+        }
+
+        function randColor_lnkd_anti_acc() {
+            // LinkedIn Brand Colors
+            return colorPallet([
+                // "#004182", // Dark Blue
+                // "#44712e", // Green
+                // "#915907", // Dark Amber
+                // "#b24020", // Dark Warm Red
+                // "#38434f", // Dark Gray
+
+                // "#0a66c2", // LinkedIn Blue
+                "#83941f", // Lime Green
+                "#e7a33e", // Amber
+                "#f5987e", // Warm Red
+                // "#56687a", // Cool Gray
+
+                "#dce6f1", // Light Blue
+                "#d7ebce", // Light Sage
+                "#fce2ba", // Light Amber
+                "#fadfd8", // Light Warm Red
+                "#e9e5df", // Light Gray
+            ]);
+        }
+
+        function randNum(n) { // return a rand num between 1 and n
+            return Math.floor(Math.random() * n);
+            // return Math.floor(Math.random() * n);
+        }
+
+        function updateBars() {
+            let start = Date.now();
+            $.each(Array(hNum * 2), function (x) {
+                if (randNum(100) > opts.colorChangePercent) {
+                    nbHA[x].setBg(randColor());
+                    // nbHA[x].setZIndex(randNum(totalBars));
+                }
+                nbHA[x].go(randNum(99));
+            });
+            $.each(Array(wNum * 2), function (x) {
+                if (randNum(100) > opts.colorChangePercent) {
+                    nbVA[x].setBg(randColor());
+                    // nbVA[x].setZIndex(randNum(totalBars));
+                }
+                nbVA[x].go(randNum(99));
+            });
+            setTimeout(function () {
+                updateBars()
+            }, opts.updateTimeout - (start - Date.now()));
+        }
+    </script>
+</head>
+
+<body>
+<div id="elements" style='position:relative;'></div>
+</body>
+</html>
